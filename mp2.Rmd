@@ -25,9 +25,9 @@ load("contributions.rda")
 
 ```{r}
 library(tidyverse)
+candidate_contribution_2 <- merge.data.frame(candidates, contributions, by = "cand_id", all = TRUE)
 
-
-
+Candidate_contribution_tidy_2 <- candidate_contribution_2 %>% filter(candidates %in% c("CO", "NV", "NM", "WI", "OH", "VA", "NC", "FL", "PA", "NH")) %>% filter(contributions %in% c("CO", "NV", "NM", "WI", "OH", "VA", "NC", "FL", "PA", "NH")) 
 
 ```
 
