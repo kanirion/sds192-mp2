@@ -4,18 +4,24 @@ author: "Your Name Here"
 date: "October 31, 2017"
 output: html_document
 ---
-test
-
-## Loading the data
+# *Some Speech is **MORE** Valuable than Others*
 
 Hypothosis:
 We believe that after the Supreme Cout decision that allowed corporations to contribute to political campaigns, there was a substantial increase in committee spending, most expecially in the swing states of:
-In the West, they are: Colorado, Nevada and New Mexico.
-In the Midwest: Wisconsin and Ohio.
-In the South: Virginia, North Carolina and Florida.
-And in the Northeast: Pennsylvania and New Hampshire.
+ - In the West, they are: Colorado, Nevada 
+ - In the Midwest: Wisconsin and Ohio.
+ - In the South: Virginia, North Carolina and Florida.
+ - And in the Northeast: Pennsylvania and New Hampshire. 
 
-```{r, include=FALSE}
+```{r echo=FALSE, results="hide", message=FALSE, warning=FALSE}
+library(tidyverse)
+library(ggplot2)
+library(ggthemes)
+```
+
+
+```{r echo=FALSE, results="hide", message=FALSE, warning=FALSE}
+
 load("house_elections.rda")
 load("candidates.rda")
 load("committees.rda")
@@ -23,11 +29,44 @@ load("contributions.rda")
 ```
 
 
-```{r}
-library(tidyverse)
-candidate_contribution_2 <- merge.data.frame(candidates, contributions, by = "cand_id", all = TRUE)
+```{r echo=FALSE, results="hide", message=FALSE, warning=FALSE}
+candidate_contribution_2 <- merge.data.frame(candidates, contributions, by = "cand_id", all = TRUE)%>%
+  filter(cand_office_state %in% c("CO", "NV",  "WI", "OH", "VA", "NC", "FL", "PA", "NH")) %>%
+  filter(cand_party_affiliation %in% c("DEM", "REP", all = TRUE))
+  
 
-Candidate_contribution_tidy_2 <- candidate_contribution_2 %>% filter(candidates %in% c("CO", "NV", "NM", "WI", "OH", "VA", "NC", "FL", "PA", "NH")) %>% filter(contributions %in% c("CO", "NV", "NM", "WI", "OH", "VA", "NC", "FL", "PA", "NH")) 
 
 ```
 
+```{r echo=FALSE, results="hide", message=FALSE, warning=FALSE}
+ggplot(candidate_contribution_2, aes(x=cand_office_state, y = transaction_amt, fill =cand_party_affiliation)) + 
+  geom_bar(stat = "identity", position="dodge") +
+  ggtitle("Committee Contributions in Swing States") +
+  xlab("Candidate State") +
+  ylab("Contribution Amount") +
+  theme_economist() 
+  
+
+  
+```
+
+```{r}
+
+```
+
+Citizens United is a non-profit conservative political advocacy group, whose stated mission is to restore the United States government to "citizens' control," seeking to "reassert the traditional American values of limited government, freedom of enterprise, strong families, and national sovereignty and security", which they achieve by producing television commercials, web advertisements, and documentary films. 
+
+```{r}
+
+```
+
+In 2010, Citizens United sued the FEC, in the Citizens United v. FEC case, in which the Supreme Court ruled that associations, corporations and organizations could legally spend money on federal political campaigns, under the first amendment. This decision equated money with speech, making it possible for those with enough money to drown out the voices of the middle class and poor, by giving Citizens United and like organizations, the federal right to craft federal election expenditures in favor for or against certain candidates without legal consequence. The same year, in Speechnow.org v. FEC, the court ruled to strike down limits on corporations and other groups spending on elections, which helped strengthen monetary influence on political campaigns and create super PACS as we now know them. 
+
+```{r}
+
+```
+We hypothesize that future elections will see larger monetary influence, to the point of unlimited spending. And most hauntingly, the voices of the wealthy few will drown out the voices of many poor. The graph above highlights the extravegant spending of both the Democratic and Republican Party to secure a seat at the governmental table. We are sure the spending will continue to increase. In the 2012 Election, in Florida alone there was spending by committees of over $3,000,000. We expect to see this number significantly rise as the time between the Citizen's United Ruling passes. 
+
+# References
+
+ https://github.com/kanirion/sds192-mp2.git
